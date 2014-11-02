@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <style>
+    .rect {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      line-height: 40px;
+    }
+    .a {
+      width: 50px;
+      height: 50px;
+      line-height: 20px;
+      background-color: #AAF;
+    }
+    </style>
+</head>
+<body>
+  <p id="orientation"></p>
+
+  <script>
+  var alpha_old=0;
+  window.onload = function() {
+    // Device orientation API
+    var orientation = document.getElementById('orientation');
+    window.ondeviceorientation = function(event) {
+      var alpha = event.alpha;
+      var beta = event.beta;
+      var gamma = event.gamma;
+      orientation.innerHTML = [
+        Math.round(alpha),
+        Math.round(beta),
+        Math.round(gamma)
+      ];
+      var alpha_diff = alpha-alpha_old;
+      alpha_old = alpha;
+     
+
+      var rectA = document.querySelector('.rect.a');
+      rectA.style.top = parseInt(rectA.style.top || '0') + beta + 'px';
+      rectA.style.left = parseInt(rectA.style.left || '0') + gamma + 'px';
+      rectA.style.width = parseInt(rectA.style.width || '0') + alpha_diff + 'px';
+      //rectA.style.height = parseInt(rectA.style.height || '0') - alpha_diff + 'px';
+      
+      var rectB = document.querySelector('.rect.b');
+      rectB.style.top = parseInt(rectB.style.top || '0') + (beta * 2) + 'px';
+      rectB.style.left = parseInt(rectB.style.left || '0') + (gamma * 2) + 'px';
+    };
+  }
+  </script>
+
+  <div class="rect a">A</div>
+  <div class="rect b">B</div>
+</body>
+</html>
